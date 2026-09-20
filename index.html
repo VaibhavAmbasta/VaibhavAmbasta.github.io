@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vaibhav — engineer, terrain</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,560;0,9..144,650;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0E1620;
+    --bg-panel: #131E29;
+    --bg-panel-raised: #17232F;
+    --line: #263442;
+    --text: #ECE7DA;
+    --text-dim: #8FA0AC;
+    --text-faint: #566573;
+    --teal: #52D6C6;
+    --teal-dim: #2E6E68;
+    --amber: #E3A34E;
+    --amber-dim: #6E5430;
+    color-scheme: dark;
+  }
+  :root[data-theme="light"] {
+    --bg: #F3EFE4;
+    --bg-panel: #E9E3D2;
+    --bg-panel-raised: #E1DAC5;
+    --line: #CFC6AC;
+    --text: #1B231B;
+    --text-dim: #52584B;
+    --text-faint: #82806E;
+    --teal: #0F8C7D;
+    --teal-dim: #BFE6DE;
+    --amber: #9C6A1E;
+    --amber-dim: #EAD3A5;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #F3EFE4;
+      --bg-panel: #E9E3D2;
+      --bg-panel-raised: #E1DAC5;
+      --line: #CFC6AC;
+      --text: #1B231B;
+      --text-dim: #52584B;
+      --text-faint: #82806E;
+      --teal: #0F8C7D;
+      --teal-dim: #BFE6DE;
+      --amber: #9C6A1E;
+      --amber-dim: #EAD3A5;
+      color-scheme: light;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 20px);
+  }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  }
+
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+
+  .mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 28px; }
+
+  /* ---------- nav ---------- */
+  nav {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 40;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 16px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .nav-name { font-family: 'Fraunces', serif; font-size: 1.05rem; font-weight: 650; letter-spacing: -0.01em; text-decoration: none; }
+  .nav-links { display: flex; gap: 22px; font-size: 0.86rem; color: var(--text-dim); }
+  .nav-links a { text-decoration: none; transition: color 0.15s ease; }
+  .nav-links a:hover { color: var(--teal); }
+  @media (max-width: 560px) { .nav-links { display: none; } }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 84px 0 64px; }
+  .hero-kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--teal);
+    margin: 0 0 18px;
+  }
+  .hero-kicker .cursor {
+    display: inline-block;
+    width: 8px; height: 1em;
+    background: var(--teal);
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    animation: blink 1.1s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  h1.hero-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 560;
+    font-size: clamp(2.4rem, 6vw, 4.1rem);
+    line-height: 1.04;
+    letter-spacing: -0.015em;
+    margin: 0 0 26px;
+    max-width: 14ch;
+  }
+  h1.hero-title em { font-style: italic; font-weight: 500; color: var(--amber); }
+
+  .hero-sub {
+    font-size: 1.08rem;
+    line-height: 1.6;
+    color: var(--text-dim);
+    max-width: 46ch;
+    margin: 0 0 42px;
+  }
+
+  .status-panel {
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    max-width: 560px;
+    overflow: hidden;
+  }
+  .status-head {
+    display: flex;
+    gap: 7px;
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .status-head span { width: 9px; height: 9px; border-radius: 50%; background: var(--line); }
+  .status-body { padding: 18px 20px 20px; font-family: 'IBM Plex Mono', monospace; font-size: 0.86rem; line-height: 1.85; }
+  .status-row { display: flex; gap: 14px; opacity: 0; transform: translateY(4px); animation: rowIn 0.4s ease forwards; }
+  .status-row .k { color: var(--text-faint); width: 78px; flex-shrink: 0; }
+  .status-row .v { color: var(--text); }
+  .status-row .v.accent { color: var(--teal); }
+  @keyframes rowIn { to { opacity: 1; transform: translateY(0); } }
+
+  /* ---------- sections ---------- */
+  section { padding: 76px 0; border-top: 1px solid var(--line); }
+  .sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; margin-bottom: 44px; flex-wrap: wrap; }
+  .sec-title { font-family: 'Fraunces', serif; font-weight: 560; font-size: clamp(1.7rem, 3.4vw, 2.3rem); margin: 0; letter-spacing: -0.01em; }
+  .sec-note { font-size: 0.9rem; color: var(--text-faint); max-width: 30ch; text-align: right; }
+  @media (max-width: 640px) { .sec-note { text-align: left; } }
+
+  /* ---------- builds ---------- */
+  .builds { display: flex; flex-direction: column; }
+  .build {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 24px;
+    padding: 26px 0;
+    border-top: 1px solid var(--line);
+  }
+  .build:first-child { border-top: none; }
+  .build-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--teal); padding-top: 3px; }
+  .build-name { font-size: 1.12rem; font-weight: 600; margin: 0 0 8px; }
+  .build-desc { color: var(--text-dim); line-height: 1.65; margin: 0 0 12px; max-width: 60ch; font-size: 0.97rem; }
+  .build-stack { display: flex; gap: 8px; flex-wrap: wrap; }
+  .build-stack span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.74rem;
+    color: var(--text-dim);
+    border: 1px solid var(--line);
+    padding: 3px 9px;
+    border-radius: 100px;
+  }
+  @media (max-width: 560px) { .build { grid-template-columns: 1fr; gap: 6px; } }
+
+  /* ---------- terrain ---------- */
+  .terrain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .terrain-card { background: var(--bg); padding: 28px 24px; }
+  .terrain-icon { width: 30px; height: 30px; margin-bottom: 18px; color: var(--amber); }
+  .terrain-icon svg { width: 100%; height: 100%; }
+  .terrain-name { font-weight: 600; font-size: 1.02rem; margin: 0 0 8px; }
+  .terrain-desc { color: var(--text-dim); font-size: 0.91rem; line-height: 1.6; margin: 0; }
+
+  /* ---------- route ---------- */
+  .route-wrap { display: grid; grid-template-columns: 1.35fr 1fr; gap: 40px; align-items: start; }
+  @media (max-width: 780px) { .route-wrap { grid-template-columns: 1fr; } }
+  #routeSvg { width: 100%; height: auto; overflow: visible; }
+  .route-path { fill: none; stroke: var(--line); stroke-width: 1.5; stroke-dasharray: 4 5; }
+  .route-node { cursor: pointer; }
+  .route-node circle.outer { fill: var(--bg-panel); stroke: var(--teal-dim); stroke-width: 1.5; transition: stroke 0.2s ease, fill 0.2s ease; }
+  .route-node circle.inner { fill: var(--text-faint); transition: fill 0.2s ease; }
+  .route-node.active circle.outer { stroke: var(--amber); fill: var(--amber-dim); }
+  .route-node.active circle.inner { fill: var(--amber); }
+  .route-node:hover circle.outer { stroke: var(--teal); }
+  .route-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; fill: var(--text-dim); }
+  .route-label.active-label { fill: var(--text); }
+
+  .route-detail {
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 26px;
+    min-height: 220px;
+  }
+  .route-detail .rd-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; color: var(--amber); margin: 0 0 6px; }
+  .route-detail h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.35rem; margin: 0 0 12px; }
+  .route-detail p { color: var(--text-dim); line-height: 1.7; font-size: 0.95rem; margin: 0; }
+  .route-hint { font-size: 0.82rem; color: var(--text-faint); margin-top: 14px; }
+
+  /* ---------- contact ---------- */
+  .contact-row { display: flex; flex-wrap: wrap; gap: 14px 34px; align-items: baseline; }
+  .contact-link {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1rem;
+    text-decoration: none;
+    color: var(--text);
+    border-bottom: 1px solid var(--teal-dim);
+    padding-bottom: 2px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .contact-link:hover { color: var(--teal); border-color: var(--teal); }
+  footer { padding: 30px 0 50px; color: var(--text-faint); font-size: 0.82rem; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#top" class="nav-name">Vaibhav</a>
+    <div class="nav-links">
+      <a href="#builds">Builds</a>
+      <a href="#terrain">Terrain</a>
+      <a href="#route">Route</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero wrap" id="top">
+  <p class="hero-kicker">status: currently online<span class="cursor"></span></p>
+  <h1 class="hero-title">Backend systems by day, <em>terrain</em> by everything else.</h1>
+  <p class="hero-sub">I build distributed systems that stay correct when things fail, and I spend the rest of my time finding out how far I can walk, run, or climb before turning back.</p>
+
+  <div class="status-panel" role="group" aria-label="Current status">
+    <div class="status-head"><span></span><span></span><span></span></div>
+    <div class="status-body" id="statusBody"></div>
+  </div>
+</header>
+
+<section id="builds">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="sec-title">What I build</h2>
+      <p class="sec-note">Backend & distributed systems, mostly Java and Kafka, mostly under someone else's SLA.</p>
+    </div>
+    <div class="builds">
+
+      <div class="build">
+        <div class="build-tag">01</div>
+        <div>
+          <h3 class="build-name">ConfigX</h3>
+          <p class="build-desc">A Kubernetes sidecar platform for dynamic configuration delivery — pushes config changes into running pods without a redeploy, coordinated through ZooKeeper.</p>
+          <div class="build-stack"><span>Kubernetes</span><span>Sidecar pattern</span><span>ZooKeeper</span></div>
+        </div>
+      </div>
+
+      <div class="build">
+        <div class="build-tag">02</div>
+        <div>
+          <h3 class="build-name">JVM & GC tuning</h3>
+          <p class="build-desc">Tuning garbage collection behavior for services running under container CPU/memory limits — working across G1GC and ZGC, generational heap sizing, and container-aware ergonomics.</p>
+          <div class="build-stack"><span>G1GC</span><span>ZGC</span><span>Container ergonomics</span></div>
+        </div>
+      </div>
+
+      <div class="build">
+        <div class="build-tag">03</div>
+        <div>
+          <h3 class="build-name">Compliance tokenization batch job</h3>
+          <p class="build-desc">A batch pipeline that tokenizes sensitive fields across roughly two billion records for regulatory compliance.</p>
+          <div class="build-stack"><span>Batch processing</span><span>Compliance</span><span>Java</span></div>
+        </div>
+      </div>
+
+      <div class="build">
+        <div class="build-tag">04</div>
+        <div>
+          <h3 class="build-name">Spring Boot 2 → 3 migration</h3>
+          <p class="build-desc">Migrated production services off Spring Boot 2 onto 3 with zero downtime — no maintenance window, no dropped traffic.</p>
+          <div class="build-stack"><span>Spring Boot</span><span>Zero-downtime</span></div>
+        </div>
+      </div>
+
+      <div class="build">
+        <div class="build-tag">05</div>
+        <div>
+          <h3 class="build-name">Kafka rebalancing & idempotency</h3>
+          <p class="build-desc">Consumer rebalancing behavior and idempotency strategies for Kafka-based services, so retries and partition reassignment don't turn into duplicate work.</p>
+          <div class="build-stack"><span>Kafka</span><span>Idempotency</span><span>Consumer groups</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="terrain">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="sec-title">Terrain</h2>
+      <p class="sec-note">What I do when I'm not looking at a terminal.</p>
+    </div>
+    <div class="terrain-grid">
+
+      <div class="terrain-card">
+        <div class="terrain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M2 20L9 7l4 6 2-3 7 10H2z"/></svg></div>
+        <h3 class="terrain-name">Mountaineering</h3>
+        <p class="terrain-desc">The activity that everything else is decent training for. Slow, self-reliant, and unforgiving of bad planning.</p>
+      </div>
+
+      <div class="terrain-card">
+        <div class="terrain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18M6 6l12 12M18 6L6 18"/></svg></div>
+        <h3 class="terrain-name">Football</h3>
+        <p class="terrain-desc">Weekly, competitive, and the one sport here that's actually a team activity.</p>
+      </div>
+
+      <div class="terrain-card">
+        <div class="terrain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="5" r="2"/><path d="M12 7v6M12 13l-5 6M12 13l5 6M6 10l6 3 6-3"/></svg></div>
+        <h3 class="terrain-name">Calisthenics</h3>
+        <p class="terrain-desc">Bodyweight strength work — no equipment required, which fits a life that involves moving cities and countries fairly often.</p>
+      </div>
+
+      <div class="terrain-card">
+        <div class="terrain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M13 4a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM5 21l4-8 3 3 4-1M8 13l1.5-5L13 9l2-4"/></svg></div>
+        <h3 class="terrain-name">Running</h3>
+        <p class="terrain-desc">Outdoors only — early mornings, whatever the city, before the heat or the meetings start.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="route">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="sec-title">Solo, on foot, mostly</h2>
+      <p class="sec-note">A rough order of where solo travel has taken me. Click a point.</p>
+    </div>
+
+    <div class="route-wrap">
+      <svg id="routeSvg" viewBox="0 0 520 300" role="img" aria-label="Route diagram of solo backpacking trips">
+        <path class="route-path" d="M60,230 C120,150 160,110 230,90 S 340,70 400,60 S 470,90 470,140 S 400,220 340,235 S 180,250 60,230 Z" />
+      </svg>
+      <div class="route-detail" id="routeDetail">
+        <p class="rd-eyebrow">select a point</p>
+        <h3>Where to</h3>
+        <p>Four stops, roughly in order. Click any point on the path to read the note.</p>
+        <p class="route-hint">Tip: the path is illustrative, not a real map — it's the order that matters.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="sec-title">Get in touch</h2>
+    </div>
+    <div class="contact-row">
+      <a class="contact-link" href="mailto:vaibhavcfc97@gmail.com">vaibhavcfc97@gmail.com</a>
+      <a class="contact-link" href="https://www.linkedin.com/in/vaibhavcfc97" target="_blank" rel="noopener">linkedin.com/in/vaibhavcfc97</a>
+    </div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <p>Built by hand, updated occasionally.</p>
+</footer>
+
+<script>
+  // ---- hero status boot sequence ----
+  const statusRows = [
+    { k: 'role', v: 'Senior SWE — Coupang', accent: true },
+    { k: 'domain', v: 'Warehouse & fulfillment systems' },
+    { k: 'based', v: 'Bengaluru, India' },
+    { k: 'prior', v: 'HPE — 4 yrs, case mgmt platform' },
+    { k: 'stack', v: 'Java, Spring Boot, Kafka, Kubernetes' },
+  ];
+  const statusBody = document.getElementById('statusBody');
+  statusRows.forEach((r, i) => {
+    const row = document.createElement('div');
+    row.className = 'status-row';
+    row.style.animationDelay = (i * 0.16 + 0.1) + 's';
+    row.innerHTML = '<span class="k">' + r.k + '</span><span class="v' + (r.accent ? ' accent' : '') + '">' + r.v + '</span>';
+    statusBody.appendChild(row);
+  });
+
+  // ---- route diagram ----
+  const stops = [
+    {
+      x: 70, y: 220,
+      title: 'Bengaluru — home base',
+      note: 'Where every trip starts and, eventually, ends.'
+    },
+    {
+      x: 235, y: 95,
+      title: 'Kazakhstan & Uzbekistan',
+      note: 'Central Asia, solo — the part of the trip fewest people ask follow-up questions about, which is a shame because it should be the opposite.'
+    },
+    {
+      x: 400, y: 62,
+      title: 'Southeast Asia',
+      note: 'The full stretch, solo and mostly overland — the region most people expect on a backpacking route.'
+    },
+    {
+      x: 340, y: 232,
+      title: 'Northeast India — Mizoram',
+      note: 'Most of India, covered solo. Mizoram is the one that stands out as the least-visited and most worth it.'
+    }
+  ];
+
+  const svgNS = 'http://www.w3.org/2000/svg';
+  const svg = document.getElementById('routeSvg');
+  const detail = document.getElementById('routeDetail');
+  const nodeEls = [];
+
+  stops.forEach((s, i) => {
+    const g = document.createElementNS(svgNS, 'g');
+    g.setAttribute('class', 'route-node');
+    g.setAttribute('tabindex', '0');
+    g.setAttribute('role', 'button');
+    g.setAttribute('aria-label', s.title);
+
+    const outer = document.createElementNS(svgNS, 'circle');
+    outer.setAttribute('class', 'outer');
+    outer.setAttribute('cx', s.x); outer.setAttribute('cy', s.y); outer.setAttribute('r', 11);
+
+    const inner = document.createElementNS(svgNS, 'circle');
+    inner.setAttribute('class', 'inner');
+    inner.setAttribute('cx', s.x); inner.setAttribute('cy', s.y); inner.setAttribute('r', 3.5);
+
+    const label = document.createElementNS(svgNS, 'text');
+    label.setAttribute('class', 'route-label');
+    label.setAttribute('x', s.x);
+    label.setAttribute('y', s.y - 18);
+    label.setAttribute('text-anchor', 'middle');
+    label.textContent = (i + 1) + '. ' + s.title.split(' — ')[0].split(' & ')[0].split(',')[0];
+
+    g.appendChild(outer); g.appendChild(inner); g.appendChild(label);
+    svg.appendChild(g);
+    nodeEls.push({ g, label, data: s });
+
+    function select() {
+      nodeEls.forEach(n => { n.g.classList.remove('active'); n.label.classList.remove('active-label'); });
+      g.classList.add('active');
+      label.classList.add('active-label');
+      detail.innerHTML =
+        '<p class="rd-eyebrow">stop ' + (i + 1) + ' of ' + stops.length + '</p>' +
+        '<h3>' + s.title + '</h3>' +
+        '<p>' + s.note + '</p>';
+    }
+    g.addEventListener('click', select);
+    g.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(); } });
+  });
+</script>
+
+</body>
+</html>
