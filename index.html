@@ -343,6 +343,23 @@
   .route-node:hover circle.outer { stroke: var(--teal); }
   .route-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; fill: var(--text-dim); }
   .route-label.active-label { fill: var(--text); }
+  .route-date { font-family: 'IBM Plex Mono', monospace; font-size: 9px; fill: var(--text-faint); }
+  .route-node.active .route-date { fill: var(--amber); }
+
+  .timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; margin-bottom: 28px; }
+  @media (max-width: 760px) { .timeline { grid-template-columns: 1fr 1fr; } }
+  .tl-item { background: none; border: none; border-left: 1px solid var(--line); text-align: left; padding: 16px 18px; cursor: pointer; color: inherit; font: inherit; transition: background 0.15s ease; }
+  .tl-item:first-child { border-left: none; }
+  @media (max-width: 760px) { .tl-item:nth-child(3) { border-left: none; } .tl-item:nth-child(n+3) { border-top: 1px solid var(--line); } }
+  .tl-item:hover { background: var(--bg-panel); }
+  .tl-when { display: block; font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--amber); margin-bottom: 4px; }
+  .tl-what { display: block; font-size: 0.92rem; font-weight: 500; line-height: 1.35; }
+
+  .legs { display: grid; gap: 10px; }
+  .leg { border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; background: var(--bg); }
+  .leg-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; }
+  .leg p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.6; }
+  .trip-count { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--text-faint); align-self: center; }
   .route-legend { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-top: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--text-faint); }
   .route-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 14px; }
   .route-tabs button {
@@ -381,6 +398,14 @@
   .terrain-icon svg { width: 100%; height: 100%; }
   .terrain-name { font-weight: 600; font-size: 1.04rem; margin: 0 0 8px; }
   .terrain-desc { color: var(--text-dim); font-size: 0.92rem; line-height: 1.65; margin: 0; }
+  .terrain-card.feature { grid-column: 1 / -1; display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; padding: 34px 30px; background: var(--bg-panel); }
+  @media (max-width: 760px) { .terrain-card.feature { grid-template-columns: 1fr; gap: 24px; padding: 28px 24px; } }
+  .terrain-card.feature .terrain-name { font-family: 'Fraunces', serif; font-size: 1.6rem; font-weight: 600; }
+  .terrain-card.feature .terrain-desc { font-size: 0.98rem; line-height: 1.75; }
+  .terrain-now { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--teal); margin: 0 0 6px; }
+  .terrain-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; align-self: center; }
+  .terrain-list li { font-size: 0.92rem; color: var(--text-dim); line-height: 1.6; border-left: 2px solid var(--amber-dim); padding-left: 14px; }
+  .terrain-list b { color: var(--text); font-weight: 500; display: block; }
 
   /* ---------- contact ---------- */
   .contact-box { display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: end; }
@@ -439,7 +464,7 @@
     <div>
       <p class="hero-kicker">~/vaibhav $ whoami<span class="cursor"></span></p>
       <h1 class="hero-title">I build systems that <span class="t">settle correctly</span>, bet on the ones that <em>move money</em>, and travel solo in between.</h1>
-      <p class="hero-sub">Senior backend engineer in Bengaluru working on warehouse and fulfilment systems. Outside of work I read a lot about markets, I'm a long-term optimist on crypto, and I've backpacked alone across India, Central Asia and Southeast Asia.</p>
+      <p class="hero-sub">Senior backend engineer at Coupang in Bengaluru, doing heavy backend work on high-throughput, distributed services. Outside of work I read a lot about markets, I'm a long-term optimist on crypto, and I'm outdoors whenever I can be: calisthenics, running, mountains, and solo trips across India, Central Asia and Southeast Asia.</p>
       <div class="hero-ctas">
         <a class="btn primary" href="#markets">Why I'm bullish on finance →</a>
         <a class="btn" href="#travel">Travel log</a>
@@ -460,9 +485,9 @@
       <div>
         <h2 class="sec-title" style="margin-bottom:28px">Engineer by trade, allocator by temperament.</h2>
         <div class="prose">
-          <p>I've spent my career on the part of software nobody sees until it breaks: <strong>backend services, message queues, batch pipelines and the infrastructure that holds them together</strong>. Four years at HPE on a case-management platform, and now Coupang, where the systems I work on decide how physical goods move through warehouses. The common thread is correctness under failure: what happens when a message is delivered twice, a pod is killed halfway through a write, or a config change lands on half the fleet.</p>
+          <p>I've spent my career on the part of software nobody sees until it breaks: <strong>backend services, message queues, batch pipelines and the infrastructure that holds them together</strong>. Four years at HPE on a case-management platform, and now Coupang, where I do heavy backend engineering on large-scale, high-traffic services. The common thread is correctness under failure: what happens when a message is delivered twice, a pod is killed halfway through a write, or a config change lands on half the fleet.</p>
           <p>That same question, <em>"what's the state of the ledger when something goes wrong?"</em>, is why I got pulled into <strong>finance and crypto</strong>. Payments, settlement, custody and clearing are distributed-systems problems with money attached. I think the next decade of financial infrastructure will be rebuilt by people who understand both sides, and I intend to be one of them.</p>
-          <p>The rest of the time I'm outdoors. Mountaineering, football, calisthenics and running keep me honest physically, and <strong>solo travel</strong> does the same for everything else. Being the only person responsible for your route, budget and safety in a country where you don't speak the language is a good test of how well you actually plan.</p>
+          <p>The rest of the time I'm outdoors, and I mean that literally: I'd rather be in a park, on a trail or on a mountain than indoors. <strong>Calisthenics</strong> is my main training right now, with running, football and mountaineering around it. <strong>Solo travel</strong> keeps me honest in a different way. I travel within India every year, spent September and October 2025 in Kazakhstan and Uzbekistan, and closed the year in Vietnam, Cambodia and Thailand. Being the only person responsible for your route, budget and safety in a country where you don't speak the language is a good test of how well you actually plan.</p>
         </div>
       </div>
       <div class="facts">
@@ -472,6 +497,8 @@
         <div class="fact"><span class="fk">stack</span><span class="fv">Java · Spring Boot · Kafka · K8s</span></div>
         <div class="fact"><span class="fk">reading</span><span class="fv">Market structure, on-chain data, macro</span></div>
         <div class="fact"><span class="fk">stance</span><span class="fv" style="color:var(--amber)">Long-term optimist</span></div>
+        <div class="fact"><span class="fk">training</span><span class="fv">Calisthenics, outdoors</span></div>
+        <div class="fact"><span class="fk">last trip</span><span class="fv">Vietnam · Cambodia · Thailand</span></div>
         <div class="fact"><span class="fk">travel</span><span class="fv">Solo, overland, cheap</span></div>
       </div>
     </div>
@@ -547,7 +574,7 @@
           <h3 class="build-name">Kafka rebalancing and idempotency</h3>
           <p class="build-desc">Consumer rebalancing behaviour and idempotency strategies for Kafka-based services, so retries and partition reassignment don't turn into duplicate work.</p>
           <ul class="build-points">
-            <li><b>The problem:</b> "at-least-once" means "sometimes twice". In a warehouse, processing the same event twice is a real-world mistake, not just a log line.</li>
+            <li><b>The problem:</b> "at-least-once" means "sometimes twice". When an event triggers a real-world action, processing it twice is a real mistake, not just a log line.</li>
             <li><b>The approach:</b> idempotency keys, careful offset-commit ordering, and rebalance listeners that finish in-flight work before a partition moves.</li>
             <li><b>Why I care:</b> this is exactly the problem payment systems and blockchains solve for money. It's how I got interested in finance infrastructure.</li>
           </ul>
@@ -615,7 +642,7 @@
     <div class="bridge reveal">
       <div class="bridge-col">
         <h5>what I solve at work</h5>
-        <div class="bridge-row"><b>Idempotent Kafka consumers</b>A duplicate event must not ship a package twice.</div>
+        <div class="bridge-row"><b>Idempotent Kafka consumers</b>A redelivered event must not trigger the same action twice.</div>
         <div class="bridge-row"><b>Consensus via ZooKeeper</b>Every node has to agree on the current config.</div>
         <div class="bridge-row"><b>Checkpointed batch jobs</b>A crash halfway must leave data in a known state.</div>
         <div class="bridge-row"><b>Zero-downtime migrations</b>Upgrade the system while it keeps serving traffic.</div>
@@ -667,14 +694,14 @@
     <p class="sec-label">04 / travel</p>
     <div class="sec-head travel-intro">
       <h2 class="sec-title">Solo, overland, on a budget.</h2>
-      <p class="sec-note">I travel alone, go slow, and prefer buses, trains and my own feet to flights. Pick a stop on the route, or use the arrows, to read the notes.</p>
+      <p class="sec-note">I travel alone, go slow, and prefer buses, trains and my own feet to flights. India every year, Southeast Asia end to end, and two big trips in 2025: Central Asia in the autumn, then Vietnam, Cambodia and Thailand in December. Pick a trip to read the notes.</p>
     </div>
+
+    <div class="timeline reveal" id="travelTimeline" aria-label="Recent trips"></div>
 
     <div class="route-wrap">
       <div class="route-map reveal">
-        <svg id="routeSvg" viewBox="0 0 520 320" role="img" aria-label="Route diagram of solo trips">
-          <path class="route-path" d="M80,250 C60,190 120,150 150,175 S 190,90 250,80 S 350,60 410,90 S 480,190 420,240 S 300,270 250,250 S 120,280 80,250 Z" />
-        </svg>
+        <svg id="routeSvg" viewBox="0 0 520 320" role="img" aria-label="Map of solo trips, each starting from Bengaluru"></svg>
         <div class="route-legend"><span>schematic, not to scale</span><span id="routeCount"></span></div>
         <div class="route-tabs" id="routeTabs" role="tablist"></div>
       </div>
@@ -708,9 +735,24 @@
     <p class="sec-label">05 / terrain</p>
     <div class="sec-head">
       <h2 class="sec-title">Away from the terminal</h2>
-      <p class="sec-note">The physical stuff. It's the best counterweight I've found to a job done sitting down.</p>
+      <p class="sec-note">I'm an outdoor person first. Training outside is the best counterweight I've found to a job done sitting down.</p>
     </div>
     <div class="terrain-grid reveal">
+
+      <div class="terrain-card feature">
+        <div>
+          <div class="terrain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 4h18M7 4v3M17 4v3"/><circle cx="12" cy="9" r="1.8"/><path d="M7 7l5 4 5-4M12 11v5M12 16l-3 5M12 16l3 5"/></svg></div>
+          <p class="terrain-now">current focus</p>
+          <h3 class="terrain-name">Calisthenics</h3>
+          <p class="terrain-desc">Bodyweight strength training is my main thing right now. All it needs is a bar, a patch of ground and consistency, so it goes wherever I go: a park in Bengaluru or a playground bar in a city I arrived in that morning, the session is the same. It's also the most honest kind of training: you can't cheat a strict pull-up, and progress is measured in skills you either have or don't.</p>
+        </div>
+        <ul class="terrain-list">
+          <li><b>Outdoors, not in a gym.</b> Parks, bars and open ground, ideally early in the morning.</li>
+          <li><b>Progressions, not weights.</b> You make an exercise harder by changing leverage and control, not by adding plates.</li>
+          <li><b>Travel-proof.</b> No equipment means no excuse. A two-week trip doesn't reset progress.</li>
+          <li><b>Carries over.</b> Grip, pulling strength and core are exactly what mountaineering and long hikes demand.</li>
+        </ul>
+      </div>
 
       <div class="terrain-card">
         <div class="terrain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M2 20L9 7l4 6 2-3 7 10H2z"/></svg></div>
@@ -722,12 +764,6 @@
         <div class="terrain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7l4 3-1.5 4.5h-5L8 10z"/></svg></div>
         <h3 class="terrain-name">Football</h3>
         <p class="terrain-desc">Weekly and competitive, and the only thing on this list that's a team activity. The handle on my email gives away the club.</p>
-      </div>
-
-      <div class="terrain-card">
-        <div class="terrain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="5" r="2"/><path d="M12 7v6M12 13l-5 6M12 13l5 6M6 10l6 3 6-3"/></svg></div>
-        <h3 class="terrain-name">Calisthenics</h3>
-        <p class="terrain-desc">Bodyweight strength work with no equipment, which suits a life that involves moving between cities and countries often. A park bar in Tashkent works the same as one in Bengaluru.</p>
       </div>
 
       <div class="terrain-card">
@@ -783,12 +819,13 @@
   // ---- hero status ----
   const statusRows = [
     { k: 'role', v: 'Senior SWE — Coupang', cls: 'accent' },
-    { k: 'domain', v: 'Warehouse & fulfilment systems' },
+    { k: 'focus', v: 'Heavy backend & distributed systems' },
     { k: 'based', v: 'Bengaluru, India' },
     { k: 'prior', v: 'HPE — 4 yrs, case mgmt platform' },
     { k: 'stack', v: 'Java, Spring Boot, Kafka, K8s' },
     { k: 'markets', v: 'long-term bullish: BTC, ETH, India', cls: 'gold' },
-    { k: 'travel', v: 'India · Central Asia · SE Asia, solo' },
+    { k: 'training', v: 'Calisthenics, outdoors' },
+    { k: 'last trip', v: 'VN → KH → TH, Dec 2025' },
   ];
   const statusBody = document.getElementById('statusBody');
   statusRows.forEach((r, i) => {
@@ -875,87 +912,120 @@
     draw();
   })();
 
-  // ---- travel route ----
+  // ---- travel log ----
+  // Every trip starts from Bengaluru, so the map is hub-and-spoke from home.
+  // Positions are loosely geographic (viewBox 520x320), not to scale.
   const stops = [
     {
-      x: 80, y: 250, short: 'Bengaluru',
+      x: 190, y: 272, lp: 'below', short: 'Bengaluru', home: true,
       title: 'Bengaluru',
       eyebrow: 'home base',
-      route: 'Bengaluru · Karnataka',
+      when: 'always',
+      route: 'Where every trip starts and ends',
       body: [
-        'Where every trip starts and, eventually, ends. Bengaluru is a good base for a solo traveller: a big airport, overnight buses to half of South India, and the Western Ghats a weekend away.',
-        'Most of my short trips are Friday-night departures: a sleeper bus out, two days of walking, and a bus back in time for Monday standup.'
+        'Every line on this map starts here. Bengaluru is a good base for someone who travels solo: a big international airport, overnight buses to half of South India, and the Western Ghats a weekend away.',
+        'Between the big trips, weekends are for getting out of the city: an overnight bus out on Friday, two days on foot, and back in time for Monday.'
       ],
       highlights: [
-        '<b>Weekend range:</b> Coorg, Chikmagalur and the Ghats treks are all a single overnight ride away.',
-        '<b>Training ground:</b> early-morning runs before the traffic are how I stay ready for longer trips.'
+        '<b>Weekend range:</b> Coorg, Chikmagalur and the Western Ghats are all a single overnight ride away.',
+        '<b>Training ground:</b> early-morning calisthenics and runs in the city\'s parks keep me ready for the longer trips.'
       ],
-      lesson: 'Short, frequent trips build the habits that make long trips work: packing light, moving fast, deciding on the ground.'
+      lesson: 'Short, frequent trips build the habits that make long ones work: packing light, moving fast, deciding on the ground.'
     },
     {
-      x: 150, y: 175, short: 'India',
-      title: 'Across India, solo',
-      eyebrow: 'most of the country',
-      route: 'South → West → North → the Himalaya',
+      x: 185, y: 140, lp: 'above', short: 'India',
+      title: 'Across India, every year',
+      eyebrow: 'somewhere new, every year',
+      when: 'every year',
+      route: 'South · West · North · the Himalaya · the Northeast',
       body: [
-        "I've covered most of India on my own, mostly by train and bus. Doing your own country solo is underrated: you can talk to almost anyone, you notice how much changes every few hundred kilometres, and you stop thinking of \"India\" as one place.",
-        'The Himalayan legs are where the mountaineering interest came from. Once you\'ve walked above the tree line, the rest of the trip gets planned around getting back there.'
+        "India isn't a place I've \"done\". It's a place I go back to every year. I travel somewhere new in the country annually, mostly solo and mostly by train and bus, and I've now covered most of it. Travelling solo in your own country is underrated: you can talk to almost anyone, you notice how much changes every few hundred kilometres, and you stop thinking of \"India\" as one place.",
+        'The Himalayan trips are where the mountaineering came from. Once you\'ve walked above the tree line, every later trip gets planned around getting back there.'
       ],
       highlights: [
         '<b>Sleeper-class trains:</b> the cheapest, slowest and most social way to cross the country.',
-        '<b>The Himalaya:</b> treks that start as holidays and end up as training.',
-        '<b>UPI everywhere:</b> paying for roadside food in remote towns with a QR code made me take fintech seriously.'
+        '<b>The Himalaya:</b> treks that started as holidays and turned into training.',
+        '<b>UPI everywhere:</b> paying for roadside food in remote towns with a QR code is what made me take fintech seriously.'
       ],
-      lesson: "Your own country is the best place to learn solo travel. The stakes are low and the variety is enormous."
+      lesson: 'Your own country is the best place to learn solo travel. The stakes are low and the variety is enormous.'
     },
     {
-      x: 250, y: 80, short: 'Mizoram',
+      x: 318, y: 150, lp: 'above', short: 'Mizoram',
       title: 'Northeast India: Mizoram',
-      eyebrow: 'the one that stands out',
-      route: 'Guwahati → Aizawl → the hills beyond',
+      eyebrow: 'the one that stands out in India',
+      when: 'India, annual trips',
+      route: 'Aizawl and the hills around it',
       body: [
-        'Of everywhere in India, Mizoram is the one I recommend most and the one people know least about. Aizawl is built straight along a ridgeline, with houses stacked down the slopes on both sides and clouds sitting below the road in the morning.',
-        'It feels like a different country from the rest of India, with a different language, food and rhythm, and it is one of the most orderly places I have been. Traffic queues quietly on mountain roads, and nobody honks.'
+        'Of everywhere in India, Mizoram is the place I recommend most and the one people know least about. Aizawl is built straight along a ridgeline, with houses stacked down the slopes on both sides and clouds sitting below the road in the morning.',
+        'It feels like a different country from the rest of India, with its own language, food and rhythm, and it is one of the most orderly places I\'ve been. Traffic queues quietly on mountain roads, and nobody honks.'
       ],
       highlights: [
         '<b>Getting in:</b> visitors from other Indian states need an Inner Line Permit, which is a big part of why it stays quiet.',
-        '<b>Aizawl:</b> a hill city where every walk is either steeply up or steeply down.',
-        '<b>Pace:</b> far fewer tourists than the rest of the Northeast, so every conversation is genuine curiosity.'
+        '<b>Aizawl:</b> a hill city where every walk is either steeply up or steeply down, which is free training.',
+        '<b>Pace:</b> far fewer tourists than the rest of the Northeast, so every conversation comes from genuine curiosity.'
       ],
-      lesson: 'The least-visited places tend to be the most rewarding, and being slightly harder to reach is part of it.'
+      lesson: 'The least-visited places tend to be the most rewarding, and being slightly hard to reach is part of it.'
     },
     {
-      x: 410, y: 90, short: 'Central Asia',
-      title: 'Kazakhstan & Uzbekistan',
-      eyebrow: 'central asia, solo',
-      route: 'Almaty → Tashkent → Samarkand → Bukhara',
+      x: 420, y: 250, lp: 'below', short: 'SE Asia',
+      title: 'Southeast Asia, end to end',
+      eyebrow: 'the whole region, over several trips',
+      when: 'over the years',
+      route: 'Mainland and islands, mostly overland',
       body: [
-        'Central Asia is the trip people ask the fewest follow-up questions about, which is a shame, because it should be the opposite. It combines Soviet-era cities, Silk Road architecture and big, empty mountain landscapes, and it has very few backpackers.',
-        'Almaty sits right under the Tian Shan, so you can go from a city café to an alpine lake in a morning. Uzbekistan is the historical half: the tiled madrasas of Samarkand\'s Registan and the old town of Bukhara feel unreal the first time you walk into them.'
+        "I've travelled across all of Southeast Asia over several trips. It's the region I know best outside India, and the one I send first-time solo travellers to without hesitation: cheap, easy to move around, safe, and generous to people on their own.",
+        'The pattern that works for me is to move slowly, cross borders by land wherever possible, and spend as much time in the small towns between the famous stops as in the famous stops themselves.'
       ],
       highlights: [
-        '<b>Almaty:</b> mountains at the edge of the city. Day trips to the lakes and canyons nearby.',
-        '<b>Samarkand:</b> the Registan at night is worth the whole trip on its own.',
-        '<b>Bukhara:</b> the best old town to wander without a plan.',
-        '<b>Getting around:</b> good trains between the Uzbek cities. Russian goes further than English.'
+        '<b>Land borders:</b> slower and more chaotic than flying, and far more memorable.',
+        '<b>Street food:</b> the best-value meals I\'ve had anywhere.',
+        '<b>Hostels:</b> the easiest region in the world to travel alone without ever being lonely.',
+        '<b>Payments:</b> QR payments spreading across the region is the same shift I watched UPI make in India.'
+      ],
+      lesson: 'The famous route is famous for a reason. Doing it slowly is what makes it yours.'
+    },
+    {
+      x: 110, y: 58, lp: 'below', short: 'Central Asia',
+      title: 'Kazakhstan & Uzbekistan',
+      eyebrow: 'central asia, solo',
+      when: 'Sep – Oct 2025',
+      route: 'Kazakhstan → Uzbekistan · September to October 2025',
+      body: [
+        'Central Asia is the trip people ask the fewest follow-up questions about, which is a shame, because it should be the opposite. It combines Soviet-era cities, Silk Road architecture and huge, empty mountain landscapes, with very few backpackers.',
+        'September into October turned out to be the right window: the summer heat has gone, the skies are clear, and the mountains around Almaty are turning gold.'
+      ],
+      legs: [
+        { name: 'Kazakhstan', note: 'Almaty sits directly under the Tian Shan, so you can go from a city café to an alpine lake in a morning. Big, green and walkable, with a Soviet modernist streak in the architecture and canyons and lakes within day-trip range.' },
+        { name: 'Uzbekistan', note: 'The historical half. Tashkent\'s ornate metro stations, the tiled madrasas of Samarkand\'s Registan, and Bukhara\'s old town, which is best explored without a plan. Fast trains connect the cities, and plov is everywhere.' }
+      ],
+      highlights: [
+        '<b>Samarkand:</b> the Registan lit up at night is worth the whole trip on its own.',
+        '<b>Getting around:</b> good trains between the Uzbek cities. Russian goes much further than English.',
+        '<b>People:</b> curious and hospitable, especially outside the capitals. An Indian solo traveller is still a novelty.'
       ],
       lesson: 'Language barriers matter less than you expect. People are generous with patience if you are with yours.'
     },
     {
-      x: 420, y: 240, short: 'SE Asia',
-      title: 'Southeast Asia',
-      eyebrow: 'the full stretch',
-      route: 'Overland, border to border',
+      x: 470, y: 150, lp: 'above', short: 'VN · KH · TH',
+      title: 'Vietnam, Cambodia & Thailand',
+      eyebrow: 'most recent trip',
+      when: 'Dec 2025',
+      route: 'Vietnam → Cambodia → Thailand · December 2025',
       body: [
-        'The classic backpacker loop, done solo and mostly overland. It\'s the route most people expect, and there\'s a reason: it is cheap, easy to move around, and generous to people travelling alone.',
-        'I went slowly, crossed land borders instead of flying, and spent as much time in the small towns between the famous stops as in the famous stops themselves.'
+        'My most recent trip, and a good way to close out 2025: three countries back to back, finishing the year in Thailand. December is the sweet spot for this route. The south is in its dry season, and northern Vietnam is cool enough to walk all day.',
+        'Doing them in this order works because each country gets progressively easier as a traveller, so by Thailand you\'re moving on autopilot and can simply enjoy it.'
+      ],
+      legs: [
+        { name: 'Vietnam', note: 'The long country. Motorbike traffic that makes sense after about a day, coffee culture that takes itself very seriously, and a noticeable change in food and landscape as you move between north and south.' },
+        { name: 'Cambodia', note: 'Angkor at sunrise lives up to the hype. Phnom Penh is the sobering part of the trip: the genocide memorials are hard to walk through and important to see.' },
+        { name: 'Thailand', note: 'The easiest country in the region to travel. Bangkok\'s street food and night markets, and a good place to slow down and end the year.' }
       ],
       highlights: [
-        '<b>Land borders:</b> slower and more chaotic than flying, and much more memorable.',
-        '<b>Street food:</b> the best-value meals of any trip I\'ve taken.',
-        '<b>Hostels:</b> the easiest region in the world to travel alone without ever being lonely.'
+        '<b>Three borders, one trip:</b> much of it can be done by land, which is exactly how I like to move.',
+        '<b>Angkor:</b> go early, stay late, and skip the midday heat.',
+        '<b>Calisthenics on the road:</b> outdoor bars and parks in every city, so training never stopped.'
       ],
-      lesson: 'The well-known route is well known for a reason. Doing it slowly is what makes it your own.'
+      lesson: 'You can cover three countries in a month if you accept seeing each one partially. I\'d still rather go deep than wide.'
     }
   ];
 
@@ -964,27 +1034,34 @@
     const svg = document.getElementById('routeSvg');
     const detail = document.getElementById('tripDetail');
     const tabs = document.getElementById('routeTabs');
-    document.getElementById('routeCount').textContent = stops.length + ' stops';
+    const timeline = document.getElementById('travelTimeline');
+    document.getElementById('routeCount').textContent = (stops.length - 1) + ' trips · 1 home';
+    const home = stops[0];
     const nodes = [];
     let current = 0;
+    const el = (tag, attrs) => { const e = document.createElementNS(svgNS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; };
+
+    // spokes first so nodes draw on top
+    const spokes = stops.map(s => {
+      if (s.home) return null;
+      const mx = (home.x + s.x) / 2, my = (home.y + s.y) / 2;
+      const dx = s.x - home.x, dy = s.y - home.y, len = Math.hypot(dx, dy);
+      const cx = mx - dy / len * 30, cy = my + dx / len * 30;
+      const p = el('path', { d: 'M' + home.x + ',' + home.y + ' Q' + cx + ',' + cy + ' ' + s.x + ',' + s.y, class: 'route-path' });
+      svg.appendChild(p);
+      return p;
+    });
 
     stops.forEach((s, i) => {
-      const g = document.createElementNS(svgNS, 'g');
-      g.setAttribute('class', 'route-node');
-      g.setAttribute('tabindex', '0');
-      g.setAttribute('role', 'button');
-      g.setAttribute('aria-label', s.title);
-      const outer = document.createElementNS(svgNS, 'circle');
-      outer.setAttribute('class', 'outer'); outer.setAttribute('cx', s.x); outer.setAttribute('cy', s.y); outer.setAttribute('r', 12);
-      const inner = document.createElementNS(svgNS, 'circle');
-      inner.setAttribute('class', 'inner'); inner.setAttribute('cx', s.x); inner.setAttribute('cy', s.y); inner.setAttribute('r', 4);
-      const label = document.createElementNS(svgNS, 'text');
-      label.setAttribute('class', 'route-label');
-      label.setAttribute('x', s.x);
-      label.setAttribute('y', s.y > 200 ? s.y + 30 : s.y - 20);
-      label.setAttribute('text-anchor', 'middle');
-      label.textContent = (i + 1) + '. ' + s.short;
-      g.append(outer, inner, label);
+      const g = el('g', { class: 'route-node', tabindex: '0', role: 'button', 'aria-label': s.title });
+      const r = s.home ? 14 : 11;
+      const outer = el('circle', { class: 'outer', cx: s.x, cy: s.y, r });
+      const inner = el('circle', { class: 'inner', cx: s.x, cy: s.y, r: s.home ? 5 : 4 });
+      const label = el('text', { class: 'route-label', x: s.x, y: s.lp === 'below' ? s.y + r + 16 : s.y - r - 8, 'text-anchor': 'middle' });
+      label.textContent = s.short;
+      const date = el('text', { class: 'route-date', x: s.x, y: s.lp === 'below' ? s.y + r + 29 : s.y - r - 21, 'text-anchor': 'middle' });
+      date.textContent = s.when;
+      g.append(outer, inner, label, date);
       svg.appendChild(g);
 
       const tab = document.createElement('button');
@@ -999,6 +1076,16 @@
       tab.addEventListener('click', go);
     });
 
+    // timeline: dated trips, newest first
+    [5, 4, 1, 3].forEach(i => {
+      const s = stops[i];
+      const b = document.createElement('button');
+      b.className = 'tl-item';
+      b.innerHTML = '<span class="tl-when">' + s.when + '</span><span class="tl-what">' + s.title + '</span>';
+      b.addEventListener('click', () => { select(i); detail.scrollIntoView({ block: 'nearest' }); });
+      timeline.appendChild(b);
+    });
+
     function select(i) {
       current = i;
       const s = stops[i];
@@ -1007,19 +1094,23 @@
         n.label.classList.toggle('active-label', j === i);
         n.tab.setAttribute('aria-selected', j === i ? 'true' : 'false');
       });
+      spokes.forEach((p, j) => { if (p) p.setAttribute('class', j === i ? 'route-path-live' : 'route-path'); });
       detail.innerHTML =
-        '<p class="trip-eyebrow">stop ' + (i + 1) + ' of ' + stops.length + ' · ' + s.eyebrow + '</p>' +
+        '<p class="trip-eyebrow">' + s.when + ' · ' + s.eyebrow + '</p>' +
         '<h3>' + s.title + '</h3>' +
         '<p class="trip-route">' + s.route + '</p>' +
         '<div class="trip-body">' + s.body.map(p => '<p>' + p + '</p>').join('') + '</div>' +
+        (s.legs ? '<h6>country by country</h6><div class="legs">' + s.legs.map(l =>
+          '<div class="leg"><div class="leg-name">' + l.name + '</div><p>' + l.note + '</p></div>').join('') + '</div>' : '') +
         '<h6>highlights</h6><ul>' + s.highlights.map(h => '<li>' + h + '</li>').join('') + '</ul>' +
         '<div class="trip-lesson">' + s.lesson + '</div>' +
         '<div class="trip-nav"><button id="tripPrev"' + (i === 0 ? ' disabled' : '') + '>← prev</button>' +
+        '<span class="trip-count">' + (i + 1) + ' / ' + stops.length + '</span>' +
         '<button id="tripNext"' + (i === stops.length - 1 ? ' disabled' : '') + '>next →</button></div>';
       document.getElementById('tripPrev').onclick = () => select(Math.max(0, current - 1));
       document.getElementById('tripNext').onclick = () => select(Math.min(stops.length - 1, current + 1));
     }
-    select(0);
+    select(stops.length - 1); // open on the most recent trip
   })();
 
   // ---- scroll reveal + active nav ----
