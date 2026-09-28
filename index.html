@@ -343,8 +343,6 @@
   .route-node:hover circle.outer { stroke: var(--teal); }
   .route-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; fill: var(--text-dim); }
   .route-label.active-label { fill: var(--text); }
-  .route-date { font-family: 'IBM Plex Mono', monospace; font-size: 9px; fill: var(--text-faint); }
-  .route-node.active .route-date { fill: var(--amber); }
 
   .timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; margin-bottom: 28px; }
   @media (max-width: 760px) { .timeline { grid-template-columns: 1fr 1fr; } }
@@ -353,7 +351,7 @@
   @media (max-width: 760px) { .tl-item:nth-child(3) { border-left: none; } .tl-item:nth-child(n+3) { border-top: 1px solid var(--line); } }
   .tl-item:hover { background: var(--bg-panel); }
   .tl-when { display: block; font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--amber); margin-bottom: 4px; }
-  .tl-what { display: block; font-size: 0.92rem; font-weight: 500; line-height: 1.35; }
+  .tl-what { display: block; font-family: 'Fraunces', serif; font-style: italic; font-size: 1.05rem; font-weight: 500; line-height: 1.3; }
 
   .legs { display: grid; gap: 10px; }
   .leg { border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; background: var(--bg); }
@@ -487,7 +485,7 @@
         <div class="prose">
           <p>I've spent my career on the part of software nobody sees until it breaks: <strong>backend services, message queues, batch pipelines and the infrastructure that holds them together</strong>. Four years at HPE on a case-management platform, and now Coupang, where I do heavy backend engineering on large-scale, high-traffic services. The common thread is correctness under failure: what happens when a message is delivered twice, a pod is killed halfway through a write, or a config change lands on half the fleet.</p>
           <p>That same question, <em>"what's the state of the ledger when something goes wrong?"</em>, is why I got pulled into <strong>finance and crypto</strong>. Payments, settlement, custody and clearing are distributed-systems problems with money attached. I think the next decade of financial infrastructure will be rebuilt by people who understand both sides, and I intend to be one of them.</p>
-          <p>The rest of the time I'm outdoors, and I mean that literally: I'd rather be in a park, on a trail or on a mountain than indoors. <strong>Calisthenics</strong> is my main training right now, with running, football and mountaineering around it. <strong>Solo travel</strong> keeps me honest in a different way. I travel within India every year, spent September and October 2025 in Kazakhstan and Uzbekistan, and closed the year in Vietnam, Cambodia and Thailand. Being the only person responsible for your route, budget and safety in a country where you don't speak the language is a good test of how well you actually plan.</p>
+          <p>The rest of the time I'm outdoors, and I mean that literally: I'd rather be in a park, on a trail or on a mountain than indoors. <strong>Calisthenics</strong> is my main training right now, with running, football and mountaineering around it. <strong>Solo travel</strong> is what I'm most curious about, and it has changed how I think more than anything else. Across India, Southeast Asia and Central Asia, going alone has meant talking to people I'd never otherwise meet, being wrong about places I thought I understood, and coming home with a slightly different view of my own life each time.</p>
         </div>
       </div>
       <div class="facts">
@@ -498,8 +496,7 @@
         <div class="fact"><span class="fk">reading</span><span class="fv">Market structure, on-chain data, macro</span></div>
         <div class="fact"><span class="fk">stance</span><span class="fv" style="color:var(--amber)">Long-term optimist</span></div>
         <div class="fact"><span class="fk">training</span><span class="fv">Calisthenics, outdoors</span></div>
-        <div class="fact"><span class="fk">last trip</span><span class="fv">Vietnam · Cambodia · Thailand</span></div>
-        <div class="fact"><span class="fk">travel</span><span class="fv">Solo, overland, cheap</span></div>
+        <div class="fact"><span class="fk">travel</span><span class="fv">Solo, curious, overland</span></div>
       </div>
     </div>
   </div>
@@ -693,11 +690,11 @@
   <div class="wrap">
     <p class="sec-label">04 / travel</p>
     <div class="sec-head travel-intro">
-      <h2 class="sec-title">Solo, overland, on a budget.</h2>
-      <p class="sec-note">I travel alone, go slow, and prefer buses, trains and my own feet to flights. India every year, Southeast Asia end to end, and two big trips in 2025: Central Asia in the autumn, then Vietnam, Cambodia and Thailand in December. Pick a trip to read the notes.</p>
+      <h2 class="sec-title">Travelling alone, <em style="color:var(--amber);font-weight:500">paying attention.</em></h2>
+      <p class="sec-note">I don't travel solo to tick off countries. I go because being alone somewhere unfamiliar forces you to be curious: you ask more, you listen more, and you're wrong more often. Every trip has changed something I thought I knew. Pick one to see what.</p>
     </div>
 
-    <div class="timeline reveal" id="travelTimeline" aria-label="Recent trips"></div>
+    <div class="timeline reveal" id="travelTimeline" aria-label="What each trip opened up"></div>
 
     <div class="route-wrap">
       <div class="route-map reveal">
@@ -825,7 +822,7 @@
     { k: 'stack', v: 'Java, Spring Boot, Kafka, K8s' },
     { k: 'markets', v: 'long-term bullish: BTC, ETH, India', cls: 'gold' },
     { k: 'training', v: 'Calisthenics, outdoors' },
-    { k: 'last trip', v: 'VN → KH → TH, Dec 2025' },
+    { k: 'travel', v: 'solo · India, SE Asia, Central Asia' },
   ];
   const statusBody = document.getElementById('statusBody');
   statusRows.forEach((r, i) => {
@@ -920,112 +917,111 @@
       x: 190, y: 272, lp: 'below', short: 'Bengaluru', home: true,
       title: 'Bengaluru',
       eyebrow: 'home base',
-      when: 'always',
+      reveal: 'Where the questions start',
       route: 'Where every trip starts and ends',
       body: [
-        'Every line on this map starts here. Bengaluru is a good base for someone who travels solo: a big international airport, overnight buses to half of South India, and the Western Ghats a weekend away.',
-        'Between the big trips, weekends are for getting out of the city: an overnight bus out on Friday, two days on foot, and back in time for Monday.'
+        'Every line on this map starts here. Home is where the curiosity builds up: a book, a conversation or a photo turns into "what is it actually like there?" and, eventually, a one-way ticket.',
+        'It\'s also where every trip lands afterwards. Coming back is when I notice what changed: what I now find strange about my own routine, and what I suddenly appreciate.'
       ],
       highlights: [
-        '<b>Weekend range:</b> Coorg, Chikmagalur and the Western Ghats are all a single overnight ride away.',
-        '<b>Training ground:</b> early-morning calisthenics and runs in the city\'s parks keep me ready for the longer trips.'
+        '<b>Weekend range:</b> the Western Ghats are an overnight bus away, which keeps the habit of leaving alive between bigger trips.',
+        '<b>Training ground:</b> early-morning calisthenics and runs in the city\'s parks keep me ready to walk all day somewhere new.'
       ],
-      lesson: 'Short, frequent trips build the habits that make long ones work: packing light, moving fast, deciding on the ground.'
+      lesson: 'You only really see home after you\'ve been away from it. Every trip changes the place I come back to.'
     },
     {
       x: 185, y: 140, lp: 'above', short: 'India',
-      title: 'Across India, every year',
-      eyebrow: 'somewhere new, every year',
-      when: 'every year',
+      title: 'Across India',
+      eyebrow: 'my own country, again and again',
+      reveal: 'One country, many worlds',
       route: 'South · West · North · the Himalaya · the Northeast',
       body: [
-        "India isn't a place I've \"done\". It's a place I go back to every year. I travel somewhere new in the country annually, mostly solo and mostly by train and bus, and I've now covered most of it. Travelling solo in your own country is underrated: you can talk to almost anyone, you notice how much changes every few hundred kilometres, and you stop thinking of \"India\" as one place.",
-        'The Himalayan trips are where the mountaineering came from. Once you\'ve walked above the tree line, every later trip gets planned around getting back there.'
+        "India is the place I keep going back to, and the one that has surprised me most. I grew up thinking I knew it. Travelling it alone, by train and bus, showed me how little that was true. A few hundred kilometres changes the language, the food, the faith, and the way people think about money, family and time.",
+        'Solo in your own country is underrated. You can talk to almost anyone, and people talk back honestly, because you\'re not a tourist to them. Most of my strongest opinions about India have been quietly taken apart by strangers on a sleeper train.'
       ],
       highlights: [
-        '<b>Sleeper-class trains:</b> the cheapest, slowest and most social way to cross the country.',
-        '<b>The Himalaya:</b> treks that started as holidays and turned into training.',
-        '<b>UPI everywhere:</b> paying for roadside food in remote towns with a QR code is what made me take fintech seriously.'
+        '<b>Sleeper trains:</b> the best place in the country for conversations you\'d never have otherwise.',
+        '<b>The Himalaya:</b> where the outdoors stopped being a hobby and became part of who I am.',
+        '<b>UPI in tiny towns:</b> watching roadside stalls take QR payments is what made me take fintech seriously.'
       ],
-      lesson: 'Your own country is the best place to learn solo travel. The stakes are low and the variety is enormous.'
+      lesson: '"India" isn\'t one place. The more of it I see, the less comfortable I am making generalisations about anything.'
     },
     {
       x: 318, y: 150, lp: 'above', short: 'Mizoram',
       title: 'Northeast India: Mizoram',
-      eyebrow: 'the one that stands out in India',
-      when: 'India, annual trips',
+      eyebrow: 'the place that surprised me most',
+      reveal: 'Quiet can be a culture',
       route: 'Aizawl and the hills around it',
       body: [
-        'Of everywhere in India, Mizoram is the place I recommend most and the one people know least about. Aizawl is built straight along a ridgeline, with houses stacked down the slopes on both sides and clouds sitting below the road in the morning.',
-        'It feels like a different country from the rest of India, with its own language, food and rhythm, and it is one of the most orderly places I\'ve been. Traffic queues quietly on mountain roads, and nobody honks.'
+        'Mizoram is the place I recommend most and the one people know least about. Aizawl is built along a ridgeline, with houses stacked down both slopes and clouds sitting below the road in the morning.',
+        'What stayed with me wasn\'t the view, though. It was how orderly and calm everything was. Traffic queues patiently on narrow mountain roads and nobody honks. It made me question how much of the chaos I\'d accepted as "just how India is" is actually a choice.'
       ],
       highlights: [
-        '<b>Getting in:</b> visitors from other Indian states need an Inner Line Permit, which is a big part of why it stays quiet.',
-        '<b>Aizawl:</b> a hill city where every walk is either steeply up or steeply down, which is free training.',
-        '<b>Pace:</b> far fewer tourists than the rest of the Northeast, so every conversation comes from genuine curiosity.'
+        '<b>Getting in:</b> visitors from other Indian states need an Inner Line Permit, which is part of why it stays so undisturbed.',
+        '<b>Community:</b> a strong sense of people looking out for each other, visible even to someone passing through.',
+        '<b>Curiosity both ways:</b> few outsiders visit, so every conversation was as curious about me as I was about them.'
       ],
-      lesson: 'The least-visited places tend to be the most rewarding, and being slightly hard to reach is part of it.'
+      lesson: 'Norms I assumed were universal turned out to be local. The things we call "normal" are mostly habits.'
     },
     {
       x: 420, y: 250, lp: 'below', short: 'SE Asia',
-      title: 'Southeast Asia, end to end',
-      eyebrow: 'the whole region, over several trips',
-      when: 'over the years',
+      title: 'Southeast Asia',
+      eyebrow: 'the region I know best outside India',
+      reveal: 'Alone is not lonely',
       route: 'Mainland and islands, mostly overland',
       body: [
-        "I've travelled across all of Southeast Asia over several trips. It's the region I know best outside India, and the one I send first-time solo travellers to without hesitation: cheap, easy to move around, safe, and generous to people on their own.",
-        'The pattern that works for me is to move slowly, cross borders by land wherever possible, and spend as much time in the small towns between the famous stops as in the famous stops themselves.'
+        "I've travelled across Southeast Asia over several trips, and it's where I learned how to travel alone. The first time you walk into a hostel, a night market or a border town with no plan and no one to lean on, you find out quickly how much of your confidence was borrowed from the people around you.",
+        'It\'s also where I stopped being a tourist. Once you slow down and stay in the towns between the famous stops, the region stops being a checklist of sights and becomes people: the family who runs the guesthouse, the stranger who shows you the right bus.'
       ],
       highlights: [
-        '<b>Land borders:</b> slower and more chaotic than flying, and far more memorable.',
-        '<b>Street food:</b> the best-value meals I\'ve had anywhere.',
-        '<b>Hostels:</b> the easiest region in the world to travel alone without ever being lonely.',
-        '<b>Payments:</b> QR payments spreading across the region is the same shift I watched UPI make in India.'
+        '<b>Land borders:</b> slower and more chaotic than flying, and much better at showing how one country fades into the next.',
+        '<b>Street food:</b> the easiest way into any culture is to eat where people eat.',
+        '<b>Payments:</b> QR payments spreading across the region is the same shift I watched UPI make at home.'
       ],
-      lesson: 'The famous route is famous for a reason. Doing it slowly is what makes it yours.'
+      lesson: 'Travelling alone makes you more open, not less. You talk to more people when there\'s no one else to talk to.'
     },
     {
       x: 110, y: 58, lp: 'below', short: 'Central Asia',
       title: 'Kazakhstan & Uzbekistan',
-      eyebrow: 'central asia, solo',
-      when: 'Sep – Oct 2025',
-      route: 'Kazakhstan → Uzbekistan · September to October 2025',
+      eyebrow: 'the trip people ask about least',
+      reveal: 'The unfamiliar is friendlier than it looks',
+      route: 'Kazakhstan → Uzbekistan',
       body: [
-        'Central Asia is the trip people ask the fewest follow-up questions about, which is a shame, because it should be the opposite. It combines Soviet-era cities, Silk Road architecture and huge, empty mountain landscapes, with very few backpackers.',
-        'September into October turned out to be the right window: the summer heat has gone, the skies are clear, and the mountains around Almaty are turning gold.'
+        'Central Asia is the trip people ask the fewest follow-up questions about, and it should be the opposite. I went with almost no frame of reference: a vague idea of the Silk Road, the Soviet Union and "the -stans". Almost every assumption I had was wrong.',
+        'It was a lesson in how thin our picture of most of the world is. Here were modern cities, extraordinary history and some of the most hospitable people I have met, in a region that barely shows up in how people like me think about the world.'
       ],
       legs: [
-        { name: 'Kazakhstan', note: 'Almaty sits directly under the Tian Shan, so you can go from a city café to an alpine lake in a morning. Big, green and walkable, with a Soviet modernist streak in the architecture and canyons and lakes within day-trip range.' },
-        { name: 'Uzbekistan', note: 'The historical half. Tashkent\'s ornate metro stations, the tiled madrasas of Samarkand\'s Registan, and Bukhara\'s old town, which is best explored without a plan. Fast trains connect the cities, and plov is everywhere.' }
+        { name: 'Kazakhstan', note: 'Almaty sits directly under the Tian Shan, so you can go from a city café to mountain wilderness in a morning. Soviet-era architecture next to glass towers: a country still working out which parts of its past to keep.' },
+        { name: 'Uzbekistan', note: 'The Silk Road half. Samarkand and Bukhara were among the great cities of the world for centuries, and walking through them made me realise how Europe-centred the history I grew up with was.' }
       ],
       highlights: [
-        '<b>Samarkand:</b> the Registan lit up at night is worth the whole trip on its own.',
-        '<b>Getting around:</b> good trains between the Uzbek cities. Russian goes much further than English.',
-        '<b>People:</b> curious and hospitable, especially outside the capitals. An Indian solo traveller is still a novelty.'
+        '<b>Hospitality:</b> strangers going out of their way to help, often with no shared language at all.',
+        '<b>History:</b> centuries of trade, science and empire that most of us were never taught.',
+        '<b>Language:</b> Russian goes further than English. Gestures, patience and a translation app cover the rest.'
       ],
-      lesson: 'Language barriers matter less than you expect. People are generous with patience if you are with yours.'
+      lesson: 'The less you know about a place, the more it has to teach you. The blank spots on your mental map are the best places to go.'
     },
     {
       x: 470, y: 150, lp: 'above', short: 'VN · KH · TH',
       title: 'Vietnam, Cambodia & Thailand',
-      eyebrow: 'most recent trip',
-      when: 'Dec 2025',
-      route: 'Vietnam → Cambodia → Thailand · December 2025',
+      eyebrow: 'three countries, three kinds of history',
+      reveal: 'History is closer than you think',
+      route: 'Vietnam → Cambodia → Thailand',
       body: [
-        'My most recent trip, and a good way to close out 2025: three countries back to back, finishing the year in Thailand. December is the sweet spot for this route. The south is in its dry season, and northern Vietnam is cool enough to walk all day.',
-        'Doing them in this order works because each country gets progressively easier as a traveller, so by Thailand you\'re moving on autopilot and can simply enjoy it.'
+        'Three neighbouring countries back to back, each with a completely different relationship with its past. Moving between them overland, you feel how recent the region\'s wars and upheavals are, and how differently each place has chosen to live with them.',
+        'It was the trip that made me think hardest about resilience. People who have rebuilt so much, so recently, are some of the most optimistic and entrepreneurial people I\'ve met. That optimism is contagious.'
       ],
       legs: [
-        { name: 'Vietnam', note: 'The long country. Motorbike traffic that makes sense after about a day, coffee culture that takes itself very seriously, and a noticeable change in food and landscape as you move between north and south.' },
-        { name: 'Cambodia', note: 'Angkor at sunrise lives up to the hype. Phnom Penh is the sobering part of the trip: the genocide memorials are hard to walk through and important to see.' },
-        { name: 'Thailand', note: 'The easiest country in the region to travel. Bangkok\'s street food and night markets, and a good place to slow down and end the year.' }
+        { name: 'Vietnam', note: 'Relentless energy. Everyone seems to be building something: a café, a shop, a business on the back of a motorbike. A country that has clearly decided to look forward.' },
+        { name: 'Cambodia', note: 'Angkor shows how great the Khmer civilisation was. Phnom Penh\'s genocide memorials show how much was lost within living memory. Seeing both in the same week is something I still think about.' },
+        { name: 'Thailand', note: 'The only country in the region never colonised, and you can feel the confidence that comes with it. The easiest place to slow down and take stock of everything else.' }
       ],
       highlights: [
-        '<b>Three borders, one trip:</b> much of it can be done by land, which is exactly how I like to move.',
-        '<b>Angkor:</b> go early, stay late, and skip the midday heat.',
-        '<b>Calisthenics on the road:</b> outdoor bars and parks in every city, so training never stopped.'
+        '<b>Borders:</b> crossing between the three shows how different neighbours can be.',
+        '<b>Angkor:</b> go early, stay late, and let the scale of it sink in.',
+        '<b>On the road:</b> outdoor bars and parks everywhere, so calisthenics came with me.'
       ],
-      lesson: 'You can cover three countries in a month if you accept seeing each one partially. I\'d still rather go deep than wide.'
+      lesson: 'Places that have been through the worst can be the most hopeful. I came back more optimistic than I left.'
     }
   ];
 
@@ -1059,9 +1055,7 @@
       const inner = el('circle', { class: 'inner', cx: s.x, cy: s.y, r: s.home ? 5 : 4 });
       const label = el('text', { class: 'route-label', x: s.x, y: s.lp === 'below' ? s.y + r + 16 : s.y - r - 8, 'text-anchor': 'middle' });
       label.textContent = s.short;
-      const date = el('text', { class: 'route-date', x: s.x, y: s.lp === 'below' ? s.y + r + 29 : s.y - r - 21, 'text-anchor': 'middle' });
-      date.textContent = s.when;
-      g.append(outer, inner, label, date);
+      g.append(outer, inner, label);
       svg.appendChild(g);
 
       const tab = document.createElement('button');
@@ -1076,12 +1070,12 @@
       tab.addEventListener('click', go);
     });
 
-    // timeline: dated trips, newest first
-    [5, 4, 1, 3].forEach(i => {
+    // what each trip opened up
+    [4, 5, 2, 3].forEach(i => {
       const s = stops[i];
       const b = document.createElement('button');
       b.className = 'tl-item';
-      b.innerHTML = '<span class="tl-when">' + s.when + '</span><span class="tl-what">' + s.title + '</span>';
+      b.innerHTML = '<span class="tl-when">' + s.short + '</span><span class="tl-what">' + s.reveal + '</span>';
       b.addEventListener('click', () => { select(i); detail.scrollIntoView({ block: 'nearest' }); });
       timeline.appendChild(b);
     });
@@ -1096,14 +1090,14 @@
       });
       spokes.forEach((p, j) => { if (p) p.setAttribute('class', j === i ? 'route-path-live' : 'route-path'); });
       detail.innerHTML =
-        '<p class="trip-eyebrow">' + s.when + ' · ' + s.eyebrow + '</p>' +
+        '<p class="trip-eyebrow">' + s.eyebrow + '</p>' +
         '<h3>' + s.title + '</h3>' +
         '<p class="trip-route">' + s.route + '</p>' +
         '<div class="trip-body">' + s.body.map(p => '<p>' + p + '</p>').join('') + '</div>' +
         (s.legs ? '<h6>country by country</h6><div class="legs">' + s.legs.map(l =>
           '<div class="leg"><div class="leg-name">' + l.name + '</div><p>' + l.note + '</p></div>').join('') + '</div>' : '') +
         '<h6>highlights</h6><ul>' + s.highlights.map(h => '<li>' + h + '</li>').join('') + '</ul>' +
-        '<div class="trip-lesson">' + s.lesson + '</div>' +
+        '<h6>what it changed</h6><div class="trip-lesson"><b>' + s.reveal + '.</b> ' + s.lesson + '</div>' +
         '<div class="trip-nav"><button id="tripPrev"' + (i === 0 ? ' disabled' : '') + '>← prev</button>' +
         '<span class="trip-count">' + (i + 1) + ' / ' + stops.length + '</span>' +
         '<button id="tripNext"' + (i === stops.length - 1 ? ' disabled' : '') + '>next →</button></div>';
